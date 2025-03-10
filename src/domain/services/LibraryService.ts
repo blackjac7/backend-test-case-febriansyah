@@ -7,7 +7,6 @@ export class LibraryService {
   borrowBook(memberCode: string, bookCode: string): boolean {
     const member = this.members.find((m) => m.code === memberCode);
     const book = this.books.find((b) => b.code === bookCode);
-    console.log("borrowBook -> member", member);
     if (!member || !book) {
       return false;
     }
@@ -23,7 +22,6 @@ export class LibraryService {
     if (this.isBookBorrowed(bookCode)) {
       return false;
     }
-    console.log("borrowBook -> book", book);
 
     member.borrowedBooks.push(bookCode);
     book.stock--;
