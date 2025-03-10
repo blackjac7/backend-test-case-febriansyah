@@ -1,16 +1,13 @@
-import { Book } from '../entities/Book';
-import { Member } from '../entities/Member';
+import { Book } from "../entities/Book";
+import { Member } from "../entities/Member";
 
 export class LibraryService {
-  constructor(
-    private books: Book[],
-    private members: Member[]
-  ) {}
+  constructor(private books: Book[], private members: Member[]) {}
 
   borrowBook(memberCode: string, bookCode: string): boolean {
-    const member = this.members.find(m => m.code === memberCode);
-    const book = this.books.find(b => b.code === bookCode);
-
+    const member = this.members.find((m) => m.code === memberCode);
+    const book = this.books.find((b) => b.code === bookCode);
+    console.log("borrowBook -> member", member);
     if (!member || !book) {
       return false;
     }
@@ -26,6 +23,7 @@ export class LibraryService {
     if (this.isBookBorrowed(bookCode)) {
       return false;
     }
+    console.log("borrowBook -> book", book);
 
     member.borrowedBooks.push(bookCode);
     book.stock--;
@@ -33,8 +31,8 @@ export class LibraryService {
   }
 
   returnBook(memberCode: string, bookCode: string, returnDate: Date): boolean {
-    const member = this.members.find(m => m.code === memberCode);
-    const book = this.books.find(b => b.code === bookCode);
+    const member = this.members.find((m) => m.code === memberCode);
+    const book = this.books.find((b) => b.code === bookCode);
 
     if (!member || !book) {
       return false;
@@ -60,21 +58,23 @@ export class LibraryService {
   }
 
   private isBookBorrowed(bookCode: string): boolean {
-    return this.members.some(member => 
+    return this.members.some((member) =>
       member.borrowedBooks.includes(bookCode)
     );
   }
 
   getAvailableBooks(): Book[] {
-    return this.books.filter(book => book.stock > 0);
+    return this.books.filter((book) => book.stock > 0);
   }
 
   getMembersStatus(): any[] {
-    return this.members.map(member => ({
+    return this.members.map((member) => ({
       code: member.code,
       name: member.name,
       borrowedBooks: member.borrowedBooks.length,
-      penalized: member.penaltyEndDate ? member.penaltyEndDate > new Date() : false
+      penalized: member.penaltyEndDate
+        ? member.penaltyEndDate > new Date()
+        : false,
     }));
   }
 }

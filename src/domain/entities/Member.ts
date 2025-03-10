@@ -15,22 +15,7 @@ export class Member {
 }
 
 export const initialMembers: Member[] = [
-  {
-    code: "M001",
-    name: "Angga",
-    borrowedBooks: [],
-    penaltyEndDate: null
-  },
-  {
-    code: "M002",
-    name: "Ferry",
-    borrowedBooks: [],
-    penaltyEndDate: null
-  },
-  {
-    code: "M003",
-    name: "Putri",
-    borrowedBooks: [],
-    penaltyEndDate: null
-  }
+  new Member("M001", "Angga"),
+  new Member("M002", "Ferry"),
+  new Member("M003", "Putri"),
 ];
